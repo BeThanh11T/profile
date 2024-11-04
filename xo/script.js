@@ -35,50 +35,54 @@ function handleClick(e) {
         gameOver(true);
     } else {
         currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
-        playerTurnText.textContent = `Lượt người chơi ${currentPlayer} đánh`;
+        playerTurnText.textContent = `Player ${currentPlayer}'s turn`;
     }
 }
 
 function checkWin() {
-    const winningCombinations = generateWinningCombinations(12);
+    const winningCombinations = generateWinningCombinations(12, 5); // Generate 5-in-a-row combinations
 
     return winningCombinations.some(combination => {
         return combination.every(index => board[index] === currentPlayer);
     });
 }
 
-function generateWinningCombinations(gridSize) {
+function generateWinningCombinations(gridSize, consecutive) {
     const combinations = [];
     
     // Rows
     for (let row = 0; row < gridSize; row++) {
-        for (let col = 0; col <= gridSize - 3; col++) {
+        for (let col = 0; col <= gridSize - consecutive; col++) {
             const start = row * gridSize + col;
-            combinations.push([start, start + 1, start + 2]);
+            const combo = Array.from({length: consecutive}, (_, i) => start + i);
+            combinations.push(combo);
         }
     }
     
     // Columns
     for (let col = 0; col < gridSize; col++) {
-        for (let row = 0; row <= gridSize - 3; row++) {
+        for (let row = 0; row <= gridSize - consecutive; row++) {
             const start = row * gridSize + col;
-            combinations.push([start, start + gridSize, start + 2 * gridSize]);
+            const combo = Array.from({length: consecutive}, (_, i) => start + i * gridSize);
+            combinations.push(combo);
         }
     }
     
     // Diagonals (Top-left to Bottom-right)
-    for (let row = 0; row <= gridSize - 3; row++) {
-        for (let col = 0; col <= gridSize - 3; col++) {
+    for (let row = 0; row <= gridSize - consecutive; row++) {
+        for (let col = 0; col <= gridSize - consecutive; col++) {
             const start = row * gridSize + col;
-            combinations.push([start, start + gridSize + 1, start + 2 * (gridSize + 1)]);
+            const combo = Array.from({length: consecutive}, (_, i) => start + i * (gridSize + 1));
+            combinations.push(combo);
         }
     }
     
     // Diagonals (Top-right to Bottom-left)
-    for (let row = 0; row <= gridSize - 3; row++) {
-        for (let col = 2; col < gridSize; col++) {
+    for (let row = 0; row <= gridSize - consecutive; row++) {
+        for (let col = consecutive - 1; col < gridSize; col++) {
             const start = row * gridSize + col;
-            combinations.push([start, start + gridSize - 1, start + 2 * (gridSize - 1)]);
+            const combo = Array.from({length: consecutive}, (_, i) => start + i * (gridSize - 1));
+            combinations.push(combo);
         }
     }
     
@@ -87,7 +91,7 @@ function generateWinningCombinations(gridSize) {
 
 function gameOver(draw) {
     isGameActive = false;
-    resultMessage.textContent = draw ? 'Hoà!' : `Người chơi ${currentPlayer} Thắng!`;
+    resultMessage.textContent = draw ? 'Draw!' : `Player ${currentPlayer} Wins!`;
     resultMessage.style.display = 'block';
 }
 
