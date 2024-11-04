@@ -23,11 +23,11 @@ body {
 
 #gameBoard {
   display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  grid-template-rows: repeat(12, 1fr);
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  grid-template-rows: repeat(12, minmax(0, 1fr));
   gap: 2px;
-  width: 90vw;
-  height: 90vw;
+  width: 96vmin; /* vmin ensures the grid fits within both width and height */
+  height: 96vmin;
   max-width: 600px;
   max-height: 600px;
 }
@@ -36,7 +36,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.5vw;
+  font-size: calc(1vmin + 0.5rem);
   background-color: #f0f0f0;
   border: 1px solid #333;
   cursor: pointer;
@@ -58,11 +58,11 @@ body {
 
 @media (max-width: 600px) {
   #gameBoard {
-    width: 100vw;
-    height: 100vw;
+    width: 94vw;
+    height: 94vw;
   }
 
   .cell {
-    font-size: 3vw;
+    font-size: calc(2vw + 0.5rem);
   }
 }
