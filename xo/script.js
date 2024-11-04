@@ -87,7 +87,7 @@ function generateWinningCombinations(gridSize) {
 
 function gameOver(draw) {
     isGameActive = false;
-    resultMessage.textContent = draw ? 'Draw!' : `Player ${currentPlayer} Wins!`;
+    resultMessage.textContent = draw ? 'Hoà!' : `Người chơi ${currentPlayer} Thắng!`;
     resultMessage.style.display = 'block';
 }
 
