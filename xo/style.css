@@ -1,3 +1,4 @@
+
 * {
   box-sizing: border-box;
 }
@@ -6,7 +7,8 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 95vh;
+  height: 100vh;
+  margin: 0;
   font-family: 'Arial', sans-serif;
   background-color: #f7f7f7;
 }
@@ -19,36 +21,25 @@ body {
   align-items: center;
 }
 
-h1 {
-  font-size: 2rem;
-  color: #333;
-  margin-bottom: 20px;
-}
-
-.player-indicator {
-  margin-bottom: 15px;
-  font-size: 1.2rem;
-}
-
-.game-board {
+#gameBoard {
   display: grid;
-  grid-template-columns: repeat(3, 100px);
-  grid-template-rows: repeat(3, 100px);
-  gap: 10px;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: repeat(12, 1fr);
+  gap: 2px;
+  width: 90vw;
+  height: 90vw;
+  max-width: 600px;
+  max-height: 600px;
 }
 
 .cell {
   display: flex;
-  justify-content: center;
   align-items: center;
-  width: 100px;
-  height: 100px;
-  background-color: #fff;
-  border: 2px solid #ccc;
-  font-size: 2rem;
-  font-weight: bold;
+  justify-content: center;
+  font-size: 1.5vw;
+  background-color: #f0f0f0;
+  border: 1px solid #333;
   cursor: pointer;
-  transition: background-color 0.3s ease;
 }
 
 .cell:hover {
@@ -61,33 +52,17 @@ h1 {
 }
 
 @keyframes flash {
-  0% { background-color: #a8e6cf; }
-  50% { background-color: #dcedc1; }
-  100% { background-color: #a8e6cf; }
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
 }
 
-.result-message {
-  margin-top: 20px;
-  font-size: 1.5rem;
-  color: #333;
-  visibility: hidden;
-}
+@media (max-width: 600px) {
+  #gameBoard {
+    width: 100vw;
+    height: 100vw;
+  }
 
-.result-message.active {
-  visibility: visible;
-}
-
-.btn {
-  padding: 10px 20px;
-  font-size: 1rem;
-  margin-top: 20px;
-  background-color: #333;
-  color: #fff;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.btn:hover {
-  background-color: #555;
+  .cell {
+    font-size: 3vw;
+  }
 }
