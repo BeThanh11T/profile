@@ -1,62 +1,93 @@
+* {
+  box-sizing: border-box;
+}
 
-# Updating CSS to support a 12x12 grid layout
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 95vh;
+  font-family: 'Arial', sans-serif;
+  background-color: #f7f7f7;
+}
 
-updated_style_content_12x12 = new_style_content.replace(
+.game-container {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 
-    ".cell {\n    width: 100px;\n    height: 100px;\n}",
+h1 {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 20px;
+}
 
-    """
+.player-indicator {
+  margin-bottom: 15px;
+  font-size: 1.2rem;
+}
 
-#gameBoard {
-
-    display: grid;
-
-    grid-template-columns: repeat(12, 50px); /* 12 columns for 12x12 layout */
-
-    grid-template-rows: repeat(12, 50px); /* 12 rows for 12x12 layout */
-
-    gap: 5px;
-
-    justify-content: center;
-
-    align-items: center;
-
+.game-board {
+  display: grid;
+  grid-template-columns: repeat(3, 100px);
+  grid-template-rows: repeat(3, 100px);
+  gap: 10px;
 }
 
 .cell {
-
-    width: 50px;
-
-    height: 50px;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    font-size: 1.5rem;
-
-    border: 1px solid #333;
-
-    cursor: pointer;
-
-    background-color: #f0f0f0;
-
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 100px;
+  background-color: #fff;
+  border: 2px solid #ccc;
+  font-size: 2rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-"""
+.cell:hover {
+  background-color: #e0e0e0;
+}
 
-)
+.cell.winning-cell {
+  background-color: #a8e6cf;
+  animation: flash 1s ease-in-out infinite;
+}
 
+@keyframes flash {
+  0% { background-color: #a8e6cf; }
+  50% { background-color: #dcedc1; }
+  100% { background-color: #a8e6cf; }
+}
 
+.result-message {
+  margin-top: 20px;
+  font-size: 1.5rem;
+  color: #333;
+  visibility: hidden;
+}
 
-# Writing the updated CSS content back to the style.css file
+.result-message.active {
+  visibility: visible;
+}
 
-with open(new_style_path, 'w') as file:
+.btn {
+  padding: 10px 20px;
+  font-size: 1rem;
+  margin-top: 20px;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
 
-    file.write(updated_style_content_12x12)
-
-
-
-updated_style_content_12x12[:1000]  # Displaying the first 1000 characters of the updated CSS for verification
+.btn:hover {
+  background-color: #555;
+}
