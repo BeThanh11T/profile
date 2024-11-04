@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2048 Game</title>
+
+    <!-- Style CSS -->
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <div class="main">
+        <div class="container">
+            <h1>2048 Game</h1>
+
+            <div class="game-instruction">
+                <span>Use arrow keys  <img src="https://cdn-icons-png.flaticon.com/512/1782/1782520.png " alt=""> for playing the game</span>
+            </div>
+
+            <div class="game-container hide">
+                <div class="score-container">
+                    Score:
+                    <span id="score">0</span>
+                </div>
+                <div class="grid"></div>
+            </div>
+
+            <div class="cover-screen">
+                <h2 id="over-text" class="hide">Game Over</h2>
+                <p id="result"></p>
+                <button id="start-button">Start Game</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script JS -->
+    <script src="./script.js"></script>
+</body>
+</html>
