@@ -35,7 +35,7 @@ function handleClick(e) {
         gameOver(true);
     } else {
         currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
-        playerTurnText.textContent = `Người chơi ${currentPlayer}'s đánh`;
+        playerTurnText.textContent = `Người chơi ${currentPlayer} đánh`;
     }
 }
 
