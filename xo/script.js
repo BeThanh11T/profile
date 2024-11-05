@@ -35,7 +35,7 @@ function handleClick(e) {
         gameOver(true);
     } else {
         currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
-        playerTurnText.textContent = `Player ${currentPlayer}'s turn`;
+        playerTurnText.textContent = `Đến lượt người chơi ${currentPlayer}`;
     }
 }
 
@@ -91,7 +91,7 @@ function generateWinningCombinations(gridSize, consecutive) {
 
 function gameOver(draw) {
     isGameActive = false;
-    resultMessage.textContent = draw ? 'Draw!' : `Player ${currentPlayer} Wins!`;
+    resultMessage.textContent = draw ? 'Hoà!' : `Người chơi ${currentPlayer} thắng!`;
     resultMessage.style.display = 'block';
 }
 
@@ -101,5 +101,5 @@ restartButton.addEventListener('click', () => {
     currentPlayer = 'X';
     isGameActive = true;
     resultMessage.style.display = 'none';
-    playerTurnText.textContent = `Player ${currentPlayer}'s turn`;
+    playerTurnText.textContent = `Đến lượt người chơi ${currentPlayer}`;
 });
