@@ -1,0 +1,86 @@
+﻿body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.payment-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 30px;
+    gap: 40px;
+}
+
+.left-panel {
+    flex: 1;
+}
+
+.right-panel {
+    flex: 1;
+    margin-top: 20px;
+}
+
+.payment-methods h2 {
+   text-align: center;
+}
+
+.payment-methods img {
+    width: 100%;
+    max-height: 50px;
+    object-fit: contain;
+    margin-bottom: 20px;
+}
+
+.qr-section {
+    border: 1px solid #ccc;
+    padding: 20px;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.qr-img {
+    width: 200px;
+    height: 200px;
+}
+
+.countdown {
+    margin-top: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #d9534f;
+}
+
+.right-panel h2 {
+    margin-bottom: 20px;
+    text-align:center;
+}
+
+#shipping-form {
+    display: flex;
+    flex-direction: column;
+}
+
+#shipping-form label {
+    margin: 10px 0 5px;
+}
+
+#shipping-form input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#shipping-form button {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#shipping-form button:hover {
+    background-color: #218838;
+}
