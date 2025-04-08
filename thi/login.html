@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đồ điện dân dụng</title>
+    <link rel="stylesheet" href="CSS/styles.css">
+    <link href="CSS/Account.css" rel="stylesheet" />
+</head>
+<body>
+    <header>
+        <div class="containe">
+            <nav>
+                <div class="search-box">
+                    <input type="text" placeholder="Tìm kiếm...">
+                </div>
+                <div class="nav-links">
+                    <a href="cart.html">Giỏ hàng</a>
+                    <a href="login.html">Đăng Nhập</a>
+                    <a href="register.html">Đăng Ký</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="menu">
+        <a href="index.html" class="menu-item">Trang chủ</a>
+        <a href="about.html" class="menu-item">Giới thiệu</a>
+        <a href="products.html" class="menu-item">Sản phẩm</a>
+        <a href="contact.html" class="menu-item">Liên hệ</a>
+    </div>
+    <main>
+        <section id="login" class="auth-section">
+            <div class="auth-container">
+                <h2>Đăng Nhập</h2>
+                <form action="login.html" method="POST">
+                    <label for="username">Tên Đăng Nhập:</label>
+                    <input type="text" id="username" name="username" required>
+
+                    <label for="password">Mật Khẩu:</label>
+                    <input type="password" id="password" name="password" required>
+
+                    <button type="submit" class="btn">Đăng Nhập</button>
+                </form>
+                <p>Chưa có tài khoản? <a href="register.html">Đăng ký</a></p>
+                <p>Bạn đã <a href="register.html">Quên mật khẩu!</a></p>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <div class="container">
+            <p>Phạm Mạnh Tuấn KHMT K9</p>
+            <p>Phạm Kim Thành KHMT K9</p>
+        </div>
+    </footer>
+</body>
+</html>
