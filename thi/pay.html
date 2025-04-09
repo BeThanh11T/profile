@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
@@ -34,11 +34,11 @@
         <div class="left-panel">
             <div class="payment-methods">
                 <h2>Hỗ trợ các phương thức thanh toán</h2>
-                <img src="IMG/payment-methods.png" alt="Phương thức thanh toán" width="20%">
+                <img src="IMG/payment-methods.png" >
             </div>
             <div class="qr-section">
-                <img src="IMG/qr.png" alt="QR thanh toán" width="30%" class="qr-img">
-                <p class="countdown">Thời gian thanh toán còn lại: <span id="timer">15:00</span></p>
+                <img src="IMG/qr.png" alt="QR thanh toán" width="30%" >
+                <p class="countdown">Thời gian thanh toán còn lại: <span id="timer">15:00 </span></p>
             </div>
         </div>
 
@@ -65,26 +65,26 @@
             <p>Phạm Kim Thành KHMT K9</p>
         </div>
     </footer>
-<script>
-  let timeLeft = 15 * 60; // 15 phút tính bằng giây
-  const timerElement = document.getElementById("timer");
+    <script>
+        let timeLeft = 15 * 60; // 15 phút tính bằng giây
+        const timerElement = document.getElementById("timer");
 
-  const countdown = setInterval(() => {
-    const minutes = Math.floor(timeLeft / 60);
-    const seconds = timeLeft % 60;
+        const countdown = setInterval(() => {
+            const minutes = Math.floor(timeLeft / 60);
+        const seconds = timeLeft % 60;
 
-    // Cập nhật hiển thị thời gian
-    timerElement.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+        // Cập nhật hiển thị thời gian
+        timerElement.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
 
-    // Giảm thời gian còn lại
-    timeLeft--;
+        // Giảm thời gian còn lại
+        timeLeft--;
 
-    // Dừng đếm ngược khi hết thời gian
-    if (timeLeft < 0) {
-      clearInterval(countdown);
-      timerElement.textContent = "Hết thời gian!";
-    }
-  }, 1000); // Cập nhật mỗi giây
-</script>
+        // Dừng đếm ngược khi hết thời gian
+        if (timeLeft < 0) {
+            clearInterval(countdown);
+            timerElement.textContent = "Hết thời gian!";
+        }
+        }, 1000); // Cập nhật mỗi giây
+    </script>
 </body>
 </html>
