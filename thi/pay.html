@@ -38,7 +38,7 @@
             </div>
             <div class="qr-section">
                 <img src="IMG/qr.png" alt="QR thanh toán" width="30%" class="qr-img">
-                <p class="countdown">Thời gian thanh toán còn lại: <span id="timer">15:00 (phút)</span></p>
+                <p class="countdown">Thời gian thanh toán còn lại: <span id="timer">15:00</span></p>
             </div>
         </div>
 
@@ -74,7 +74,7 @@
     const seconds = timeLeft % 60;
 
     // Cập nhật hiển thị thời gian
-    timerElement.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds} (phút)`;
+    timerElement.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
 
     // Giảm thời gian còn lại
     timeLeft--;
