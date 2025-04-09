@@ -1,4 +1,4 @@
-﻿body {
+body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
@@ -6,17 +6,15 @@
 
 .payment-container {
     display: flex;
-    justify-content: space-between;
     padding: 30px;
     gap: 40px;
 }
 
 .left-panel {
-    flex: 1;
+    display:flex;
 }
 
 .right-panel {
-    flex: 1;
     margin-top: 20px;
 }
 
@@ -29,6 +27,7 @@
     max-height: 50px;
     object-fit: contain;
     margin-bottom: 20px;
+    
 }
 
 .qr-section {
@@ -38,10 +37,7 @@
     border-radius: 10px;
 }
 
-.qr-img {
-    width: 200px;
-    height: 200px;
-}
+
 
 .countdown {
     margin-top: 10px;
@@ -77,7 +73,6 @@
     color: white;
     border: none;
     border-radius: 5px;
-    cursor: pointer;
     font-size: 16px;
 }
 
