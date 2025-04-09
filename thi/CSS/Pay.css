@@ -6,15 +6,17 @@ body {
 
 .payment-container {
     display: flex;
+    justify-content: space-between;
     padding: 30px;
     gap: 40px;
 }
 
 .left-panel {
-    display:flex;
+    flex: 1;
 }
 
 .right-panel {
+    flex: 1;
     margin-top: 20px;
 }
 
