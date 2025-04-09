@@ -65,6 +65,26 @@
             <p>Phạm Kim Thành KHMT K9</p>
         </div>
     </footer>
+<script>
+  let timeLeft = 15 * 60; // 15 phút tính bằng giây
+  const timerElement = document.getElementById("timer");
 
+  const countdown = setInterval(() => {
+    const minutes = Math.floor(timeLeft / 60);
+    const seconds = timeLeft % 60;
+
+    // Cập nhật hiển thị thời gian
+    timerElement.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds} (phút)`;
+
+    // Giảm thời gian còn lại
+    timeLeft--;
+
+    // Dừng đếm ngược khi hết thời gian
+    if (timeLeft < 0) {
+      clearInterval(countdown);
+      timerElement.textContent = "Hết thời gian!";
+    }
+  }, 1000); // Cập nhật mỗi giây
+</script>
 </body>
 </html>
