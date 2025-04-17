@@ -8,83 +8,82 @@
     <link href="CSS/Pay.css" rel="stylesheet" />
 </head>
 <body>
-    <header>
-        <div class="containe">
-            <nav>
-                <div class="search-box">
-                    <input type="text" placeholder="Tìm kiếm...">
-                </div>
-                <div class="nav-links">
-                    <a href="cart.html">Giỏ hàng</a>
-                    <a href="login.html">Đăng Nhập</a>
-                    <a href="register.html">Đăng Ký</a>
-                </div>
-            </nav>
-        </div>
-    </header>
-
-    <div class="menu">
-        <a href="index.html" class="menu-item">Trang chủ</a>
-        <a href="about.html" class="menu-item">Giới thiệu</a>
-        <a href="products.html" class="menu-item">Sản phẩm</a>
-        <a href="contact.html" class="menu-item">Liên hệ</a>
-    </div>
-
-    <main class="payment-container">
-        <div class="left-panel">
-            <div class="payment-methods">
-                <h2>Hỗ trợ các phương thức thanh toán</h2>
-                <img src="IMG/payment-methods.png" >
+    <div class="wrapper">
+        <header>
+            <div class="containe">
+                <nav>
+                    <div class="search-box">
+                        <input type="text" placeholder="Tìm kiếm...">
+                    </div>
+                    <div class="nav-links">
+                        <a href="cart.html">Giỏ hàng</a>
+                        <a href="login.html">Đăng Nhập</a>
+                        <a href="register.html">Đăng Ký</a>
+                    </div>
+                </nav>
             </div>
-            <div class="qr-section">
-                <img src="IMG/qr.png" alt="QR thanh toán" width="30%" >
-                <p class="countdown">Thời gian thanh toán còn lại: <span id="timer">15:00 </span></p>
+        </header>
+
+        <div class="menu">
+            <a href="index.html" class="menu-item">Trang chủ</a>
+            <a href="about.html" class="menu-item">Giới thiệu</a>
+            <a href="products.html" class="menu-item">Sản phẩm</a>
+            <a href="contact.html" class="menu-item">Liên hệ</a>
+        </div>
+
+        <main class="payment-container">
+            <div class="left-panel">
+                <div class="payment-methods">
+                    <h2>Hỗ trợ các phương thức thanh toán</h2>
+                    <img src="IMG/payment-methods.png">
+                </div>
+                <div class="qr-section">
+                    <img src="IMG/qr.png" alt="QR thanh toán" width="30%">
+                    <p class="countdown">Thời gian thanh toán còn lại: <span id="timer">15:00 </span></p>
+                </div>
             </div>
+
+            <div class="right-panel">
+                <h2>Thông tin nhận hàng</h2>
+                <form id="shipping-form">
+                    <label>Họ và tên</label>
+                    <input type="text" required>
+
+                    <label>Số điện thoại</label>
+                    <input type="tel" required>
+
+                    <label>Địa chỉ nhận hàng</label>
+                    <input type="text" required>
+
+                    <button type="submit">Xác nhận & Thanh toán</button>
+                </form>
+            </div>
+        </main>
+
+        <footer>
+            <div class="footer-text">Phạm Mạnh Tuấn KHMT K9 & Phạm Kim Thành KHMT K9</div>
+        </footer>
+        <script>
+            let timeLeft = 15 * 60; // 15 phút tính bằng giây
+            const timerElement = document.getElementById("timer");
+
+            const countdown = setInterval(() => {
+                const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+
+            // Cập nhật hiển thị thời gian
+            timerElement.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+
+            // Giảm thời gian còn lại
+            timeLeft--;
+
+            // Dừng đếm ngược khi hết thời gian
+            if (timeLeft < 0) {
+                clearInterval(countdown);
+                timerElement.textContent = "Hết thời gian!";
+            }
+            }, 1000); // Cập nhật mỗi giây
+        </script>
         </div>
-
-        <div class="right-panel">
-            <h2>Thông tin nhận hàng</h2>
-            <form id="shipping-form">
-                <label>Họ và tên</label>
-                <input type="text" required>
-
-                <label>Số điện thoại</label>
-                <input type="tel" required>
-
-                <label>Địa chỉ nhận hàng</label>
-                <input type="text" required>
-
-                <button type="submit">Xác nhận & Thanh toán</button>
-            </form>
-        </div>
-    </main>
-
-    <footer>
-        <div class="container">
-            <p>Phạm Mạnh Tuấn KHMT K9</p>
-            <p>Phạm Kim Thành KHMT K9</p>
-        </div>
-    </footer>
-    <script>
-        let timeLeft = 15 * 60; // 15 phút tính bằng giây
-        const timerElement = document.getElementById("timer");
-
-        const countdown = setInterval(() => {
-            const minutes = Math.floor(timeLeft / 60);
-        const seconds = timeLeft % 60;
-
-        // Cập nhật hiển thị thời gian
-        timerElement.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-
-        // Giảm thời gian còn lại
-        timeLeft--;
-
-        // Dừng đếm ngược khi hết thời gian
-        if (timeLeft < 0) {
-            clearInterval(countdown);
-            timerElement.textContent = "Hết thời gian!";
-        }
-        }, 1000); // Cập nhật mỗi giây
-    </script>
 </body>
 </html>
