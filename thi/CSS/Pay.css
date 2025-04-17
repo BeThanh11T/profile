@@ -7,7 +7,6 @@ body {
 .payment-container {
     display: flex;
     justify-content: space-between;
-    background-position: center;
     padding: 30px;
     gap: 40px;
 }
@@ -77,6 +76,7 @@ body {
     border: none;
     border-radius: 5px;
     font-size: 16px;
+    cursor: pointer;
 }
 
 #shipping-form button:hover {
