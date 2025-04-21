@@ -92,20 +92,33 @@ nav {
 .product-list {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    margin-left:20px;
+    gap: 20px;
+    justify-content: space-between;
+    margin-bottom: 40px;
 }
 
 .product-item {
-    background-color: white;
+        background-color: white;
     padding: 10px;
     margin: 10px;
     width: 180px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     text-align: center;
 }
+
+.section-title {
+    display: flex;
+    align-items: center;
+    font-size: 22px;
+    font-weight: bold;
+    margin: 30px 0 15px;
+}
+
+.title-icon {
+    width: 24px;
+    margin-right: 10px;
+}
+
 
 .product-item img {
     width: 100%;
