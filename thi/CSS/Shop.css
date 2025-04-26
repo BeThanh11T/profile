@@ -1,4 +1,4 @@
-﻿body {
+body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
@@ -13,8 +13,11 @@ header {
     color: white;
     padding: 5px 0;
     text-align: center;
+    background-position: center;
+    background-size: contain;
+    background-color:white;
+    background-repeat: no-repeat;
 }
-
 .containe {
     width: 80%;
     margin: 0 5px 0 auto;
@@ -154,9 +157,24 @@ nav {
     color: #2ecc71;
     font-size: 14px;
 }
-footer {
-    background-color: #2C3E50;
-    color: white;
+
+.product-listp {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-between;
+    margin-bottom: 40px;
+}
+
+.product-itemp {
+    background-color: white;
+    padding: 10px;
+    margin: 10px;
+    width: 240px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     text-align: center;
-    padding: 5px 0;
+}
+.product-itemp img {
+    width: 100%;
+    height: auto;
 }
