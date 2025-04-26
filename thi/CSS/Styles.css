@@ -89,7 +89,7 @@ nav {
     padding: 10px;
 }
 
-.product-list {
+.product-listi {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
@@ -142,6 +142,7 @@ nav {
     font-size: 18px;
     font-weight: bold;
 }
+
 footer {
     background-image: url('../IMG/banner.png');
     background-size: cover;
