@@ -2,61 +2,50 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <title>Chuyển link Shopee Affiliate</title>
+  <title>Chuyển đổi Link Shopee Affiliate</title>
   <style>
-    body { font-family: Arial; max-width: 600px; margin: auto; padding: 40px; }
-    input, button, textarea { width: 100%; margin-top: 10px; padding: 10px; font-size: 16px; }
+    body { font-family: Arial; padding: 30px; max-width: 600px; margin: auto; }
+    input, textarea, button { width: 100%; padding: 10px; margin-top: 10px; font-size: 16px; }
     button { background: #ee4d2d; color: white; border: none; cursor: pointer; }
     button:hover { background: #d94425; }
   </style>
 </head>
 <body>
 
-  <h2>🔗 Chuyển đổi Link Shopee Affiliate</h2>
-  <label for="inputLink">Nhập link Shopee (dài hoặc rút gọn):</label>
-  <input type="text" id="inputLink" placeholder="https://s.shopee.vn/abc123 hoặc https://shopee.vn/..." />
+<h2>🔁 Chuyển đổi link Shopee Affiliate</h2>
 
-  <button onclick="convertLink()">Chuyển đổi</button>
+<input id="inputLink" type="text" placeholder="Dán link Shopee (vn.shp.ee hoặc s.shopee.vn)">
+<button onclick="convert()">Chuyển đổi</button>
 
-  <label for="outputLink">🔗 Link Affiliate:</label>
-  <textarea id="outputLink" rows="3" readonly></textarea>
+<textarea id="outputLink" rows="3" readonly></textarea>
+<button onclick="copyToClipboard()">📋 Sao chép vào bộ nhớ tạm</button>
 
-  <script>
-    async function resolveShortUrl(url) {
-      try {
-        const response = await fetch(url, { method: 'HEAD', redirect: 'follow' });
-        return response.url;
-      } catch (err) {
-        alert("Không thể giải mã link rút gọn!");
-        return null;
-      }
+<script>
+  const mappings = {
+    // Dưới đây là ví dụ ánh xạ, bạn có thể cập nhật thêm
+    "https://vn.shp.ee/85MwejE": "https://s.shopee.vn/3freWqiiTW",
+    "https://vn.shp.ee/2Vfh7xAbyg": "https://s.shopee.vn/8UwuH0iUfQ",
+    "https://s.shopee.vn/oldLink": "https://s.shopee.vn/newAffiliateLink"
+  };
+
+  function convert() {
+    const input = document.getElementById("inputLink").value.trim();
+    const output = document.getElementById("outputLink");
+
+    if (mappings[input]) {
+      output.value = mappings[input];
+    } else {
+      output.value = "⚠️ Không tìm thấy link ánh xạ cho URL bạn nhập.";
     }
+  }
 
-    async function convertLink() {
-      const input = document.getElementById("inputLink").value.trim();
-      const output = document.getElementById("outputLink");
-      output.value = "Đang xử lý...";
-
-      let finalUrl = input;
-
-      // Nếu là link rút gọn
-      if (input.includes("s.shopee.vn")) {
-        const resolved = await resolveShortUrl(input);
-        if (resolved) finalUrl = resolved;
-        else {
-          output.value = "Lỗi: không thể giải mã link rút gọn.";
-          return;
-        }
-      }
-
-      // Thêm affiliate ID nếu chưa có
-      let affId = "17358980251";
-      let newUrl = new URL(finalUrl);
-      newUrl.searchParams.set("af_id", affId);
-
-      output.value = newUrl.toString();
-    }
-  </script>
+  function copyToClipboard() {
+    const output = document.getElementById("outputLink");
+    output.select();
+    document.execCommand("copy");
+    alert("✅ Đã sao chép vào clipboard!");
+  }
+</script>
 
 </body>
 </html>
