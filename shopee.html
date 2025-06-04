@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Chuyển link Shopee Affiliate</title>
+  <style>
+    body { font-family: Arial; max-width: 600px; margin: auto; padding: 40px; }
+    input, button, textarea { width: 100%; margin-top: 10px; padding: 10px; font-size: 16px; }
+    button { background: #ee4d2d; color: white; border: none; cursor: pointer; }
+    button:hover { background: #d94425; }
+  </style>
+</head>
+<body>
+
+  <h2>🔗 Chuyển đổi Link Shopee Affiliate</h2>
+  <label for="inputLink">Nhập link Shopee (dài hoặc rút gọn):</label>
+  <input type="text" id="inputLink" placeholder="https://s.shopee.vn/abc123 hoặc https://shopee.vn/..." />
+
+  <button onclick="convertLink()">Chuyển đổi</button>
+
+  <label for="outputLink">🔗 Link Affiliate:</label>
+  <textarea id="outputLink" rows="3" readonly></textarea>
+
+  <script>
+    async function resolveShortUrl(url) {
+      try {
+        const response = await fetch(url, { method: 'HEAD', redirect: 'follow' });
+        return response.url;
+      } catch (err) {
+        alert("Không thể giải mã link rút gọn!");
+        return null;
+      }
+    }
+
+    async function convertLink() {
+      const input = document.getElementById("inputLink").value.trim();
+      const output = document.getElementById("outputLink");
+      output.value = "Đang xử lý...";
+
+      let finalUrl = input;
+
+      // Nếu là link rút gọn
+      if (input.includes("s.shopee.vn")) {
+        const resolved = await resolveShortUrl(input);
+        if (resolved) finalUrl = resolved;
+        else {
+          output.value = "Lỗi: không thể giải mã link rút gọn.";
+          return;
+        }
+      }
+
+      // Thêm affiliate ID nếu chưa có
+      let affId = "17358980251";
+      let newUrl = new URL(finalUrl);
+      newUrl.searchParams.set("af_id", affId);
+
+      output.value = newUrl.toString();
+    }
+  </script>
+
+</body>
+</html>
