@@ -2,48 +2,70 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <title>Chuyển đổi Link Shopee Affiliate</title>
+  <title>Phân tích CSV Shopee</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
   <style>
-    body { font-family: Arial; padding: 30px; max-width: 600px; margin: auto; }
+    body { font-family: Arial; padding: 30px; max-width: 650px; margin: auto; }
     input, textarea, button { width: 100%; padding: 10px; margin-top: 10px; font-size: 16px; }
     button { background: #ee4d2d; color: white; border: none; cursor: pointer; }
     button:hover { background: #d94425; }
+    #result { font-weight: bold; margin-top: 20px; color: #2c3e50; font-size: 18px; line-height: 1.6; }
   </style>
 </head>
 <body>
 
-<h2>🔁 Chuyển đổi link Shopee Affiliate</h2>
+<h2>📊 Phân tích Shopee CSV: Tổng AK & Số đơn hợp lệ</h2>
 
-<input id="inputLink" type="text" placeholder="Dán link Shopee (vn.shp.ee hoặc s.shopee.vn)">
-<button onclick="convert()">Chuyển đổi</button>
-
-<textarea id="outputLink" rows="3" readonly></textarea>
-<button onclick="copyToClipboard()">📋 Sao chép vào bộ nhớ tạm</button>
+<input type="file" id="csvFile" accept=".csv">
+<div id="result">Chưa có dữ liệu.</div>
+<button onclick="copyResult()">📋 Sao chép kết quả</button>
 
 <script>
-  const mappings = {
-    // Dưới đây là ví dụ ánh xạ, bạn có thể cập nhật thêm
-    "https://vn.shp.ee/85MwejE": "https://s.shopee.vn/3freWqiiTW",
-    "https://vn.shp.ee/2Vfh7xAbyg": "https://s.shopee.vn/8UwuH0iUfQ",
-    "https://s.shopee.vn/oldLink": "https://s.shopee.vn/newAffiliateLink"
-  };
+  document.getElementById('csvFile').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (!file) return;
 
-  function convert() {
-    const input = document.getElementById("inputLink").value.trim();
-    const output = document.getElementById("outputLink");
+    Papa.parse(file, {
+      header: true,
+      skipEmptyLines: true,
+      complete: function(results) {
+        const data = results.data;
+        let totalAK = 0;
+        let validOrders = 0;
 
-    if (mappings[input]) {
-      output.value = mappings[input];
-    } else {
-      output.value = "⚠️ Không tìm thấy link ánh xạ cho URL bạn nhập.";
-    }
-  }
+        const keys = Object.keys(data[0]);
+        const akKey = keys[36];     // Cột AK: vị trí 37 (index 36)
+        const statusKey = keys[1];  // Cột B: Trạng thái đơn hàng
 
-  function copyToClipboard() {
-    const output = document.getElementById("outputLink");
-    output.select();
-    document.execCommand("copy");
-    alert("✅ Đã sao chép vào clipboard!");
+        data.forEach(row => {
+          // Tổng cột AK
+          let raw = row[akKey];
+          if (typeof raw === 'string') {
+            raw = raw.replace(/₫|,/g, '').trim(); // loại ký tự tiền tệ
+          }
+          const value = parseFloat(raw);
+          if (!isNaN(value)) totalAK += value;
+
+          // Đếm đơn hợp lệ
+          const status = row[statusKey]?.toLowerCase();
+          if (status && !status.includes("hủy") && !status.includes("huỷ")) {
+            validOrders++;
+          }
+        });
+
+        const resultText = 
+          `🔢 <strong>Tiền hoa hồng:</strong> ${totalAK.toLocaleString('vi-VN')}<br>` +
+          `📦 <strong>Số đơn hàng:</strong> ${validOrders}`;
+        document.getElementById('result').innerHTML = resultText;
+      }
+    });
+  });
+
+  function copyResult() {
+    const text = document.getElementById('result').innerText;
+    navigator.clipboard.writeText(text)
+      .then(() => alert("✅ Đã sao chép vào clipboard!"))
+      .catch(() => alert("❌ Không thể sao chép."));
   }
 </script>
 
