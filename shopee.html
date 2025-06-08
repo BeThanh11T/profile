@@ -2,28 +2,33 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <title>Phân tích CSV Shopee</title>
+  <title>Phân tích Shopee Affiliate</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
   <style>
     body { font-family: Arial; padding: 30px; max-width: 650px; margin: auto; }
-    input, textarea, button { width: 100%; padding: 10px; margin-top: 10px; font-size: 16px; }
+    input, button { width: 100%; padding: 10px; margin-top: 10px; font-size: 16px; }
     button { background: #ee4d2d; color: white; border: none; cursor: pointer; }
     button:hover { background: #d94425; }
-    #result { font-weight: bold; margin-top: 20px; color: #2c3e50; font-size: 18px; line-height: 1.6; }
+    #result { font-weight: bold; margin-top: 20px; color: #2c3e50; font-size: 18px; line-height: 1.6; white-space: pre-line; }
   </style>
 </head>
 <body>
 
-<h2>📊 Phân tích Shopee affiliate</h2>
+<h2>📊 Phân tích Shopee Affiliate</h2>
 
-<input type="file" id="csvFile" accept=".csv">
-<div id="result">Chưa có dữ liệu.</div>
+<input type="file" id="csvFile">
+<div id="result">Vui lòng chọn file .csv để phân tích...</div>
 <button onclick="copyResult()">📋 Sao chép kết quả</button>
 
 <script>
   document.getElementById('csvFile').addEventListener('change', function(e) {
     const file = e.target.files[0];
     if (!file) return;
+
+    if (!file.name.endsWith(".csv")) {
+      alert("⚠️ Vui lòng chọn đúng file .csv");
+      return;
+    }
 
     Papa.parse(file, {
       header: true,
@@ -34,29 +39,27 @@
         let validOrders = 0;
 
         const keys = Object.keys(data[0]);
-        const akKey = keys[36];     // Cột AK: vị trí 37 (index 36)
-        const statusKey = keys[1];  // Cột B: Trạng thái đơn hàng
+        const akKey = keys[36];     // Cột AK = thứ 37
+        const statusKey = keys[1];  // Cột B = trạng thái
 
         data.forEach(row => {
-          // Tổng cột AK
           let raw = row[akKey];
           if (typeof raw === 'string') {
-            raw = raw.replace(/₫|,/g, '').trim(); // loại ký tự tiền tệ
+            raw = raw.replace(/₫|,/g, '').trim();
           }
           const value = parseFloat(raw);
           if (!isNaN(value)) totalAK += value;
 
-          // Đếm đơn hợp lệ
           const status = row[statusKey]?.toLowerCase();
           if (status && !status.includes("hủy") && !status.includes("huỷ")) {
             validOrders++;
           }
         });
 
-        const resultText = 
-          `🔢 <strong>Tiền hoa hồng:</strong> ${totalAK.toLocaleString('vi-VN')}<br>` +
-          `📦 <strong>Số đơn hàng:</strong> ${validOrders}`;
-        document.getElementById('result').innerHTML = resultText;
+        const resultText =
+          `🔢 Tiền hoa hồng: ${totalAK.toLocaleString('vi-VN')} ₫\n` +
+          `📦 Số đơn hàng: ${validOrders}`;
+        document.getElementById('result').innerText = resultText;
       }
     });
   });
