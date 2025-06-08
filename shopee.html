@@ -1,3 +1,25 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Phân tích Shopee Affiliate</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+  <style>
+    body { font-family: Arial; padding: 30px; max-width: 650px; margin: auto; }
+    input, button { width: 100%; padding: 10px; margin-top: 10px; font-size: 16px; }
+    button { background: #ee4d2d; color: white; border: none; cursor: pointer; }
+    button:hover { background: #d94425; }
+    #result { font-weight: bold; margin-top: 20px; color: #2c3e50; font-size: 18px; line-height: 1.6; white-space: pre-line; }
+  </style>
+</head>
+<body>
+
+<h2>📊 Phân tích Shopee Affiliate</h2>
+
+<input type="file" id="csvFile">
+<div id="result">Vui lòng chọn file .csv để phân tích...</div>
+<button onclick="copyResult()">📋 Sao chép kết quả</button>
+
 <script>
   document.getElementById('csvFile').addEventListener('change', function(e) {
     const file = e.target.files[0];
@@ -14,7 +36,7 @@
       complete: function(results) {
         const data = results.data;
         let totalAK = 0;
-        let validOrderSet = new Set(); // dùng để lọc trùng theo ID đơn hàng
+        let validOrderSet = new Set();
 
         const keys = Object.keys(data[0]);
         const idKey = keys[0];      // Cột A: ID đơn hàng
@@ -22,7 +44,7 @@
         const akKey = keys[36];     // Cột AK: Hoa hồng
 
         data.forEach(row => {
-          // Tổng tiền hoa hồng (AK)
+          // Tính tổng AK
           let raw = row[akKey];
           if (typeof raw === 'string') {
             raw = raw.replace(/₫|,/g, '').trim();
@@ -30,7 +52,7 @@
           const value = parseFloat(raw);
           if (!isNaN(value)) totalAK += value;
 
-          // Đếm đơn hàng hợp lệ (duy nhất)
+          // Lọc đơn hợp lệ (không trùng)
           const status = row[statusKey]?.toLowerCase();
           const orderId = row[idKey]?.trim();
 
@@ -56,3 +78,6 @@
       .catch(() => alert("❌ Không thể sao chép."));
   }
 </script>
+
+</body>
+</html>
