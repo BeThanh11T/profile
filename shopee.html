@@ -2,14 +2,41 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Thêm thẻ viewport -->
   <title>Phân tích Shopee Affiliate</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
   <style>
-    body { font-family: Arial; padding: 30px; max-width: 650px; margin: auto; }
-    input, button { width: 100%; padding: 10px; margin-top: 10px; font-size: 16px; }
-    button { background: #ee4d2d; color: white; border: none; cursor: pointer; }
-    button:hover { background: #d94425; }
-    #result { font-weight: bold; margin-top: 20px; color: #2c3e50; font-size: 18px; line-height: 1.6; white-space: pre-line; }
+    body { 
+      font-family: Arial; 
+      padding: 30px; 
+      max-width: 650px; 
+      margin: auto; 
+    }
+    input, button { 
+      width: 100%; 
+      padding: 10px; 
+      margin-top: 10px; 
+      font-size: 16px; 
+      box-sizing: border-box; /* Đảm bảo padding không làm tăng kích thước */
+    }
+    button { 
+      background: #ee4d2d; 
+      color: white; 
+      border: none; 
+      cursor: pointer; 
+    }
+    button:hover { 
+      background: #d94425; 
+    }
+    #result { 
+      font-weight: bold; 
+      margin-top: 20px; 
+      color: #2c3e50; 
+      font-size: 18px; 
+      line-height: 1.6; 
+      white-space: pre-line; 
+      word-wrap: break-word; /* Ngắt từ nếu cần */
+    }
   </style>
 </head>
 <body>
