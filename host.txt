@@ -1,0 +1,9 @@
+0.0.0.0 qq.com
+0.0.0.0 dl.listdl.com
+0.0.0.0 cdn.wetest.qq.com
+0.0.0.0 estv-op.tga.qq.com
+0.0.0.0 ms.singaporepaya.com
+0.0.0.0 tdm.deltaverse-intl.com
+0.0.0.0 cloudctrl.gcloudsdk.com
+0.0.0.0 cdn-cflgl-sg.vasdgame.com
+0.0.0.0 android.crashsight.wetest.net
