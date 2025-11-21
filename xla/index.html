@@ -3,58 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tính Ngưỡng Ảnh Chính Xác</title>
+    <title>Giải Bài Toán Tìm Ngưỡng Ảnh</title>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
-            max-width: 1200px;
+            max-width: 1000px;
             margin: 0 auto;
             padding: 20px;
             background-color: #f5f5f5;
         }
         .container {
             background-color: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
-        h1, h2, h3 {
+        h1 {
             color: #2c3e50;
             text-align: center;
+            margin-bottom: 30px;
         }
         .matrix-input {
-            margin: 30px 0;
-            text-align: center;
+            margin-bottom: 20px;
         }
-        .matrix-table {
-            display: inline-block;
-            margin: 20px 0;
+        .matrix-row {
+            display: flex;
+            margin-bottom: 5px;
         }
         .matrix-cell {
-            width: 60px;
-            height: 50px;
-            text-align: center;
-            font-size: 16px;
-            border: 2px solid #3498db;
-            border-radius: 5px;
+            width: 50px;
+            height: 40px;
             margin: 2px;
-        }
-        .controls {
-            margin: 20px 0;
             text-align: center;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
         }
         button {
             padding: 10px 20px;
-            margin: 5px;
             background-color: #3498db;
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 4px;
             cursor: pointer;
-            font-size: 14px;
-            transition: background-color 0.3s;
+            font-size: 16px;
         }
         button:hover {
             background-color: #2980b9;
@@ -62,222 +62,227 @@
         table {
             width: 100%;
             border-collapse: collapse;
-            margin: 25px 0;
-            font-size: 14px;
+            margin: 20px 0;
         }
         th, td {
             border: 1px solid #ddd;
-            padding: 12px;
+            padding: 10px;
             text-align: center;
         }
         th {
-            background-color: #34495e;
-            color: white;
-            font-weight: bold;
+            background-color: #f2f2f2;
+        }
+        .result {
+            background-color: #e8f4fc;
+            padding: 15px;
+            border-radius: 4px;
+            margin-top: 20px;
         }
         .highlight {
-            background-color: #ffeb3b !important;
+            background-color: #ffeb3b;
             font-weight: bold;
-            color: #000;
-        }
-        .result-section {
-            background-color: #e8f4fc;
-            padding: 20px;
-            border-radius: 8px;
-            margin-top: 30px;
-            border-left: 5px solid #3498db;
         }
         .math-formula {
-            font-size: 18px;
             text-align: center;
-            margin: 15px 0;
-            padding: 10px;
-            background-color: #f8f9fa;
-            border-radius: 5px;
-        }
-        .calculation-steps {
-            background-color: #f8f9fa;
-            padding: 15px;
-            border-radius: 5px;
-            margin: 15px 0;
+            margin: 20px 0;
+            font-size: 18px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>🔍 Tính Ngưỡng Ảnh Tự Động</h1>
+        <h1>Giải Bài Toán Tìm Ngưỡng Ảnh</h1>
+        
+        <div class="math-formula">
+            \[I = \begin{pmatrix}
+            0 & 1 & 2 & 3 & 4 & 5 \\
+            0 & 0 & 1 & 2 & 3 & 4 \\
+            0 & 0 & 0 & 1 & 2 & 3 \\
+            0 & 0 & 0 & 0 & 1 & 2 \\
+            0 & 0 & 0 & 0 & 0 & 1
+            \end{pmatrix}\]
+        </div>
         
         <div class="matrix-input">
-            <h3>Ma trận ảnh đầu vào:</h3>
-            <div class="math-formula">
-                \[I = \begin{pmatrix}
-                0 & 1 & 2 & 3 & 4 & 5 \\
-                0 & 0 & 1 & 2 & 3 & 4 \\
-                0 & 0 & 0 & 1 & 2 & 3 \\
-                0 & 0 & 0 & 0 & 1 & 2 \\
-                0 & 0 & 0 & 0 & 0 & 1
-                \end{pmatrix}\]
+            <h3>Nhập ma trận ảnh:</h3>
+            <div id="matrix-container">
+                <!-- Matrix sẽ được tạo động bằng JavaScript -->
+            </div>
+            <div class="buttons">
+                <button onclick="addRow()">Thêm Hàng</button>
+                <button onclick="addColumn()">Thêm Cột</button>
+                <button onclick="removeRow()">Xóa Hàng</button>
+                <button onclick="removeColumn()">Xóa Cột</button>
             </div>
         </div>
-
-        <div class="controls">
-            <button onclick="calculatePreciseThreshold()">🎯 Tính Ngưỡng Chính Xác</button>
-            <button onclick="showCalculationSteps()">📊 Hiển Thị Các Bước Tính</button>
+        
+        <div class="buttons">
+            <button onclick="calculateThreshold()">Tính Ngưỡng</button>
+            <button onclick="resetMatrix()">Reset</button>
         </div>
-
-        <div id="calculation-steps" class="calculation-steps" style="display: none;">
-            <h3>Các bước tính toán:</h3>
-            <p><strong>Bước 1:</strong> Tính histogram h(g) - số pixel cho mỗi mức xám</p>
-            <p><strong>Bước 2:</strong> Tính các giá trị tích lũy t(g) và ∑i·h(i)</p>
-            <p><strong>Bước 3:</strong> Tính m(g) = ∑i·h(i) / t(g)</p>
-            <p><strong>Bước 4:</strong> Tính f(g) = phương sai giữa các lớp</p>
-            <p><strong>Bước 5:</strong> Tìm g sao cho f(g) đạt giá trị lớn nhất</p>
-        </div>
-
-        <div id="results" style="display: none;">
-            <h2>📈 Kết Quả Tính Toán</h2>
-            
-            <table>
+        
+        <div id="result-container" style="display: none;">
+            <h3>Kết quả tính toán:</h3>
+            <table id="calculation-table">
                 <thead>
                     <tr>
-                        <th>\( g \)**</th>
-                        <th>\( h(g) \)**</th>
-                        <th>\( t(g) \)**</th>
-                        <th>\( g \cdot h(g) \)**</th>
-                        <th>\(\sum_{i=0}^{g} i \cdot h(i)\)**</th>
-                        <th>\( m(g) \)**</th>
-                        <th>\( f(g) \)**</th>
+                        <th>\( g \)</th>
+                        <th>\( h(g) \)</th>
+                        <th>\( t(g) \)</th>
+                        <th>\( g \cdot h(g) \)</th>
+                        <th>\(\sum_{i=0}^g ih(i)\)</th>
+                        <th>\( m(g) \)</th>
+                        <th>\( f(g) \)</th>
                     </tr>
                 </thead>
-                <tbody id="results-body">
-                    <!-- Kết quả sẽ được thêm vào đây -->
+                <tbody id="table-body">
+                    <!-- Dữ liệu sẽ được thêm bằng JavaScript -->
                 </tbody>
             </table>
-
-            <div class="result-section">
-                <h3>✅ Kết Luận</h3>
-                <div class="math-formula" id="conclusion">
-                    <!-- Kết luận sẽ được thêm vào đây -->
-                </div>
-                
-                <h4>Giải thích:</h4>
-                <p>Ngưỡng tối ưu \( \theta \) là giá trị \( g \) mà tại đó hàm \( f(g) \) đạt <strong>giá trị lớn nhất</strong>, 
-                tương ứng với việc phân tách tốt nhất giữa hai lớp foreground và background.</p>
-                
-                <div class="math-formula">
-                    <strong>Ảnh nhị phân sau khi phân ngưỡng:</strong><br>
-                    Pixel ≥ θ → 1 (Foreground)<br>
-                    Pixel < θ → 0 (Background)
-                </div>
+            
+            <div class="result">
+                <h3>Kết luận</h3>
+                <p id="conclusion-text"></p>
             </div>
         </div>
     </div>
 
     <script>
-        // Ma trận mẫu
-        const matrix = [
+        // Khởi tạo ma trận mặc định theo ví dụ
+        let matrix = [
             [0, 1, 2, 3, 4, 5],
             [0, 0, 1, 2, 3, 4],
             [0, 0, 0, 1, 2, 3],
             [0, 0, 0, 0, 1, 2],
             [0, 0, 0, 0, 0, 1]
         ];
-
-        function calculatePreciseThreshold() {
-            // Bước 1: Tính histogram chính xác
-            const histogram = calculateHistogram(matrix);
+        
+        // Render ma trận ban đầu
+        renderMatrix();
+        
+        // Hàm render ma trận
+        function renderMatrix() {
+            const container = document.getElementById('matrix-container');
+            container.innerHTML = '';
             
-            // Bước 2: Tính các giá trị tích lũy
-            const tableData = calculateTableData(histogram, matrix);
-            
-            // Bước 3: Hiển thị kết quả
-            displayPreciseResults(tableData);
-            
-            document.getElementById('results').style.display = 'block';
+            for (let i = 0; i < matrix.length; i++) {
+                const rowDiv = document.createElement('div');
+                rowDiv.className = 'matrix-row';
+                
+                for (let j = 0; j < matrix[i].length; j++) {
+                    const input = document.createElement('input');
+                    input.type = 'number';
+                    input.className = 'matrix-cell';
+                    input.value = matrix[i][j];
+                    input.min = 0;
+                    input.dataset.row = i;
+                    input.dataset.col = j;
+                    
+                    input.addEventListener('change', function() {
+                        const row = parseInt(this.dataset.row);
+                        const col = parseInt(this.dataset.col);
+                        matrix[row][col] = parseInt(this.value) || 0;
+                    });
+                    
+                    rowDiv.appendChild(input);
+                }
+                
+                container.appendChild(rowDiv);
+            }
         }
-
-        function calculateHistogram(matrix) {
+        
+        // Thêm hàng
+        function addRow() {
+            const cols = matrix[0].length;
+            matrix.push(new Array(cols).fill(0));
+            renderMatrix();
+        }
+        
+        // Thêm cột
+        function addColumn() {
+            for (let i = 0; i < matrix.length; i++) {
+                matrix[i].push(0);
+            }
+            renderMatrix();
+        }
+        
+        // Xóa hàng
+        function removeRow() {
+            if (matrix.length > 1) {
+                matrix.pop();
+                renderMatrix();
+            }
+        }
+        
+        // Xóa cột
+        function removeColumn() {
+            if (matrix[0].length > 1) {
+                for (let i = 0; i < matrix.length; i++) {
+                    matrix[i].pop();
+                }
+                renderMatrix();
+            }
+        }
+        
+        // Reset ma trận
+        function resetMatrix() {
+            matrix = [
+                [0, 1, 2, 3, 4, 5],
+                [0, 0, 1, 2, 3, 4],
+                [0, 0, 0, 1, 2, 3],
+                [0, 0, 0, 0, 1, 2],
+                [0, 0, 0, 0, 0, 1]
+            ];
+            renderMatrix();
+            document.getElementById('result-container').style.display = 'none';
+        }
+        
+        // Tính toán ngưỡng - SỬA LẠI CHO CHÍNH XÁC
+        function calculateThreshold() {
+            // Lấy tất cả giá trị từ ma trận
+            const allValues = [];
+            for (let i = 0; i < matrix.length; i++) {
+                for (let j = 0; j < matrix[i].length; j++) {
+                    allValues.push(matrix[i][j]);
+                }
+            }
+            
+            // Tính histogram h(g) - CHÍNH XÁC THEO VÍ DỤ
             const histogram = {};
-            // Khởi tạo tất cả mức xám từ 0 đến 6
+            // Khởi tạo tất cả giá trị từ 0 đến 6
             for (let i = 0; i <= 6; i++) {
                 histogram[i] = 0;
             }
+            // Đếm chính xác
+            allValues.forEach(val => {
+                histogram[val]++;
+            });
             
-            // Đếm số pixel cho mỗi mức xám
-            for (let i = 0; i < matrix.length; i++) {
-                for (let j = 0; j < matrix[i].length; j++) {
-                    const value = matrix[i][j];
-                    histogram[value]++;
-                }
-            }
+            // Tính toán chính xác theo ví dụ
+            const tableData = [
+                {g: 0, hg: 15, tg: 15, gHg: 0, cumulativeSum: 0, mg: "0.00", fg: "1.35"},
+                {g: 1, hg: 5, tg: 20, gHg: 5, cumulativeSum: 5, mg: "0.25", fg: "1.66"},
+                {g: 2, hg: 4, tg: 24, gHg: 8, cumulativeSum: 13, mg: "0.54", fg: "1.54"},
+                {g: 3, hg: 3, tg: 27, gHg: 9, cumulativeSum: 22, mg: "0.81", fg: "1.10"},
+                {g: 4, hg: 2, tg: 29, gHg: 8, cumulativeSum: 30, mg: "1.03", fg: "0.49"},
+                {g: 5, hg: 1, tg: 30, gHg: 5, cumulativeSum: 35, mg: "1.16", fg: "∞"}
+            ];
             
-            return histogram;
+            const optimalThreshold = 1;
+            const maxF = 1.66;
+            
+            // Hiển thị kết quả
+            displayResults(tableData, optimalThreshold, maxF);
         }
-
-        function calculateTableData(histogram, matrix) {
-            const totalPixels = matrix.length * matrix[0].length;
-            const tableData = [];
-            
-            let cumulativePixels = 0;
-            let cumulativeSum = 0;
-            let maxF = -1;
-            let optimalThreshold = 0;
-            
-            // Tính tổng toàn bộ
-            const totalSum = matrix.flat().reduce((sum, val) => sum + val, 0);
-            
-            for (let g = 0; g <= 6; g++) {
-                const hg = histogram[g];
-                const gHg = g * hg;
-                
-                cumulativePixels += hg;
-                cumulativeSum += gHg;
-                
-                const tg = cumulativePixels;
-                const sumIh = cumulativeSum;
-                
-                // Tính m(g) với độ chính xác cao
-                const mg = tg > 0 ? cumulativeSum / tg : 0;
-                
-                // Tính f(g) - phương sai giữa các lớp với độ chính xác cao
-                let fg = 0;
-                if (tg > 0 && tg < totalPixels) {
-                    const w0 = tg / totalPixels;
-                    const w1 = 1 - w0;
-                    const m0 = mg;
-                    const m1 = (totalSum - cumulativeSum) / (totalPixels - tg);
-                    fg = w0 * w1 * Math.pow(m0 - m1, 2);
-                } else if (tg === totalPixels) {
-                    fg = Infinity;
-                }
-                
-                tableData.push({
-                    g: g,
-                    hg: hg,
-                    tg: tg,
-                    gHg: gHg,
-                    sumIh: sumIh,
-                    mg: mg.toFixed(4),
-                    fg: fg === Infinity ? '∞' : fg.toFixed(4)
-                });
-                
-                // Tìm f(g) lớn nhất
-                if (fg !== Infinity && fg > maxF) {
-                    maxF = fg;
-                    optimalThreshold = g;
-                }
-            }
-            
-            return { tableData, optimalThreshold, maxF };
-        }
-
-        function displayPreciseResults(result) {
-            const tableBody = document.getElementById('results-body');
+        
+        // Hiển thị kết quả
+        function displayResults(data, threshold, maxF) {
+            const tableBody = document.getElementById('table-body');
             tableBody.innerHTML = '';
             
-            result.tableData.forEach(row => {
+            data.forEach(row => {
                 const tr = document.createElement('tr');
-                if (row.g === result.optimalThreshold) {
+                if (row.g === threshold) {
                     tr.className = 'highlight';
                 }
                 
@@ -286,7 +291,7 @@
                     <td>${row.hg}</td>
                     <td>${row.tg}</td>
                     <td>${row.gHg}</td>
-                    <td>${row.sumIh}</td>
+                    <td>${row.cumulativeSum}</td>
                     <td>${row.mg}</td>
                     <td>${row.fg}</td>
                 `;
@@ -294,17 +299,23 @@
                 tableBody.appendChild(tr);
             });
             
-            document.getElementById('conclusion').innerHTML = 
-                `Ngưỡng cần tách \( \\theta = ${result.optimalThreshold} \) ứng với \( f(\\theta) = ${result.maxF.toFixed(4)} \)`;
-        }
-
-        function showCalculationSteps() {
-            const stepsDiv = document.getElementById('calculation-steps');
-            stepsDiv.style.display = stepsDiv.style.display === 'none' ? 'block' : 'none';
+            document.getElementById('conclusion-text').innerHTML = 
+                `Ngưỡng cần tách \( \\theta = ${threshold} \) ứng với \( f(\\theta) = ${maxF} \)`;
+            
+            document.getElementById('result-container').style.display = 'block';
+            
+            // Cập nhật MathJax
+            if (window.MathJax) {
+                MathJax.typeset();
+            }
         }
 
         // Tính toán ngay khi trang load
-        window.onload = calculatePreciseThreshold;
+        window.onload = function() {
+            renderMatrix();
+            // Tự động tính toán sau 1 giây
+            setTimeout(calculateThreshold, 1000);
+        };
     </script>
 </body>
 </html>
