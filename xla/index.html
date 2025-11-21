@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Giải Bài Toán Tìm Ngưỡng Ảnh</title>
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -24,6 +22,40 @@
             color: #2c3e50;
             text-align: center;
             margin-bottom: 30px;
+        }
+        .matrix-input {
+            margin-bottom: 20px;
+        }
+        .matrix-row {
+            display: flex;
+            margin-bottom: 5px;
+        }
+        .matrix-cell {
+            width: 50px;
+            height: 40px;
+            margin: 2px;
+            text-align: center;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #2980b9;
         }
         table {
             width: 100%;
@@ -48,112 +80,244 @@
             background-color: #ffeb3b;
             font-weight: bold;
         }
-        .math {
-            font-size: 18px;
-        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Kết Quả Tính Toán Tìm Ngưỡng Ảnh</h1>
+        <h1>Giải Bài Toán Tìm Ngưỡng Ảnh</h1>
         
-        <h3>Bảng tính toán:</h3>
-        <table>
-            <thead>
-                <tr>
-                    <th>\( g \)**</th>
-                    <th>\( h(g) \)**</th>
-                    <th>\( t(g) \)**</th>
-                    <th>\( g \cdot h(g) \)**</th>
-                    <th>\(\sum_{i=0}^{g} i \cdot h(i)\)**</th>
-                    <th>\( m(g) \)**</th>
-                    <th>\( f(g) \)**</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>0</td>
-                    <td>10</td>
-                    <td>10</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0.00</td>
-                    <td>1.68</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>5</td>
-                    <td>15</td>
-                    <td>5</td>
-                    <td>5</td>
-                    <td>0.33</td>
-                    <td>2.25</td>
-                </tr>
-                <tr class="highlight">
-                    <td>2</td>
-                    <td>5</td>
-                    <td>20</td>
-                    <td>10</td>
-                    <td>15</td>
-                    <td>0.75</td>
-                    <td>2.35</td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>4</td>
-                    <td>24</td>
-                    <td>12</td>
-                    <td>27</td>
-                    <td>1.13</td>
-                    <td>2.01</td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td>3</td>
-                    <td>27</td>
-                    <td>12</td>
-                    <td>39</td>
-                    <td>1.44</td>
-                    <td>1.36</td>
-                </tr>
-                <tr>
-                    <td>5</td>
-                    <td>2</td>
-                    <td>29</td>
-                    <td>10</td>
-                    <td>49</td>
-                    <td>1.69</td>
-                    <td>0.60</td>
-                </tr>
-                <tr>
-                    <td>6</td>
-                    <td>1</td>
-                    <td>30</td>
-                    <td>6</td>
-                    <td>55</td>
-                    <td>1.83</td>
-                    <td>∞</td>
-                </tr>
-            </tbody>
-        </table>
-
-        <div class="result">
-            <h3>Kết luận</h3>
-            <p class="math">Ngưỡng cần tách \( \theta = 2 \) ứng với \( f(\theta) = 2.35 \)</p>
+        <div class="matrix-input">
+            <h3>Nhập ma trận ảnh:</h3>
+            <div id="matrix-container">
+                <!-- Matrix sẽ được tạo động bằng JavaScript -->
+            </div>
+            <div class="buttons">
+                <button onclick="addRow()">Thêm Hàng</button>
+                <button onclick="addColumn()">Thêm Cột</button>
+                <button onclick="removeRow()">Xóa Hàng</button>
+                <button onclick="removeColumn()">Xóa Cột</button>
+            </div>
+        </div>
+        
+        <div class="buttons">
+            <button onclick="calculateThreshold()">Tính Ngưỡng</button>
+            <button onclick="resetMatrix()">Reset</button>
+        </div>
+        
+        <div id="result-container" style="display: none;">
+            <h3>Kết quả tính toán:</h3>
+            <table id="calculation-table">
+                <thead>
+                    <tr>
+                        <th>\( g \)</th>
+                        <th>\( h(g) \)</th>
+                        <th>\( t(g) \)</th>
+                        <th>\( g \cdot h(g) \)</th>
+                        <th>\(\sum_{i=0}^g ih(i)\)</th>
+                        <th>\( m(g) \)</th>
+                        <th>\( f(g) \)</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body">
+                    <!-- Dữ liệu sẽ được thêm bằng JavaScript -->
+                </tbody>
+            </table>
+            
+            <div class="result">
+                <h3>Kết luận</h3>
+                <p id="conclusion-text"></p>
+            </div>
         </div>
     </div>
 
     <script>
-        // Cấu hình MathJax
-        window.MathJax = {
-            tex: {
-                inlineMath: [['$', '$'], ['\\(', '\\)']],
-                displayMath: [['$$', '$$'], ['\\[', '\\]']]
-            },
-            svg: {
-                fontCache: 'global'
+        // Khởi tạo ma trận mặc định
+        let matrix = [
+            [1, 2, 3, 4, 5, 6],
+            [0, 1, 2, 3, 4, 5],
+            [0, 0, 1, 2, 3, 4],
+            [0, 0, 0, 1, 2, 3],
+            [0, 0, 0, 0, 1, 2]
+        ];
+        
+        // Render ma trận ban đầu
+        renderMatrix();
+        
+        // Hàm render ma trận
+        function renderMatrix() {
+            const container = document.getElementById('matrix-container');
+            container.innerHTML = '';
+            
+            for (let i = 0; i < matrix.length; i++) {
+                const rowDiv = document.createElement('div');
+                rowDiv.className = 'matrix-row';
+                
+                for (let j = 0; j < matrix[i].length; j++) {
+                    const input = document.createElement('input');
+                    input.type = 'number';
+                    input.className = 'matrix-cell';
+                    input.value = matrix[i][j];
+                    input.min = 0;
+                    input.dataset.row = i;
+                    input.dataset.col = j;
+                    
+                    input.addEventListener('change', function() {
+                        const row = parseInt(this.dataset.row);
+                        const col = parseInt(this.dataset.col);
+                        matrix[row][col] = parseInt(this.value) || 0;
+                    });
+                    
+                    rowDiv.appendChild(input);
+                }
+                
+                container.appendChild(rowDiv);
             }
-        };
+        }
+        
+        // Thêm hàng
+        function addRow() {
+            const cols = matrix[0].length;
+            matrix.push(new Array(cols).fill(0));
+            renderMatrix();
+        }
+        
+        // Thêm cột
+        function addColumn() {
+            for (let i = 0; i < matrix.length; i++) {
+                matrix[i].push(0);
+            }
+            renderMatrix();
+        }
+        
+        // Xóa hàng
+        function removeRow() {
+            if (matrix.length > 1) {
+                matrix.pop();
+                renderMatrix();
+            }
+        }
+        
+        // Xóa cột
+        function removeColumn() {
+            if (matrix[0].length > 1) {
+                for (let i = 0; i < matrix.length; i++) {
+                    matrix[i].pop();
+                }
+                renderMatrix();
+            }
+        }
+        
+        // Reset ma trận
+        function resetMatrix() {
+            matrix = [
+                [1, 2, 3, 4, 5, 6],
+                [0, 1, 2, 3, 4, 5],
+                [0, 0, 1, 2, 3, 4],
+                [0, 0, 0, 1, 2, 3],
+                [0, 0, 0, 0, 1, 2]
+            ];
+            renderMatrix();
+            document.getElementById('result-container').style.display = 'none';
+        }
+        
+        // Tính toán ngưỡng
+        function calculateThreshold() {
+            // Lấy tất cả giá trị từ ma trận
+            const allValues = [];
+            for (let i = 0; i < matrix.length; i++) {
+                for (let j = 0; j < matrix[i].length; j++) {
+                    allValues.push(matrix[i][j]);
+                }
+            }
+            
+            // Tính histogram h(g)
+            const histogram = {};
+            allValues.forEach(val => {
+                histogram[val] = (histogram[val] || 0) + 1;
+            });
+            
+            // Lấy các mức xám và sắp xếp
+            const grayLevels = Object.keys(histogram).map(Number).sort((a, b) => a - b);
+            const totalPixels = allValues.length;
+            
+            // Tính các giá trị cho bảng
+            const tableData = [];
+            let cumulativePixels = 0;
+            let cumulativeSum = 0;
+            let maxF = -1;
+            let optimalThreshold = 0;
+            
+            for (let i = 0; i < grayLevels.length; i++) {
+                const g = grayLevels[i];
+                const hg = histogram[g];
+                const gHg = g * hg;
+                
+                cumulativePixels += hg;
+                cumulativeSum += gHg;
+                
+                const tg = cumulativePixels;
+                const mg = cumulativeSum / tg;
+                
+                // Tính f(g) - phương sai giữa các lớp
+                let fg = Infinity;
+                if (tg > 0 && tg < totalPixels) {
+                    const w0 = tg / totalPixels;
+                    const w1 = 1 - w0;
+                    const m0 = cumulativeSum / tg;
+                    const m1 = (allValues.reduce((sum, val) => sum + val, 0) - cumulativeSum) / (totalPixels - tg);
+                    fg = w0 * w1 * Math.pow(m0 - m1, 2);
+                }
+                
+                tableData.push({
+                    g: g,
+                    hg: hg,
+                    tg: tg,
+                    gHg: gHg,
+                    cumulativeSum: cumulativeSum,
+                    mg: mg.toFixed(2),
+                    fg: fg === Infinity ? '∞' : fg.toFixed(2)
+                });
+                
+                // Tìm f(g) lớn nhất
+                if (fg !== Infinity && fg > maxF) {
+                    maxF = fg;
+                    optimalThreshold = g;
+                }
+            }
+            
+            // Hiển thị kết quả
+            displayResults(tableData, optimalThreshold, maxF);
+        }
+        
+        // Hiển thị kết quả
+        function displayResults(data, threshold, maxF) {
+            const tableBody = document.getElementById('table-body');
+            tableBody.innerHTML = '';
+            
+            data.forEach(row => {
+                const tr = document.createElement('tr');
+                if (row.g === threshold) {
+                    tr.className = 'highlight';
+                }
+                
+                tr.innerHTML = `
+                    <td>${row.g}</td>
+                    <td>${row.hg}</td>
+                    <td>${row.tg}</td>
+                    <td>${row.gHg}</td>
+                    <td>${row.cumulativeSum}</td>
+                    <td>${row.mg}</td>
+                    <td>${row.fg}</td>
+                `;
+                
+                tableBody.appendChild(tr);
+            });
+            
+            document.getElementById('conclusion-text').innerHTML = 
+                `Ngưỡng cần tách \( \\theta = ${threshold} \) ứng với \( f(\\theta) = ${maxF.toFixed(2)} \)`;
+            
+            document.getElementById('result-container').style.display = 'block';
+        }
     </script>
 </body>
 </html>
