@@ -93,16 +93,6 @@
     <div class="container">
         <h1>Giải Bài Toán Tìm Ngưỡng Ảnh</h1>
         
-        <div class="math-formula">
-            \[I = \begin{pmatrix}
-            0 & 1 & 2 & 3 & 4 & 5 \\
-            0 & 0 & 1 & 2 & 3 & 4 \\
-            0 & 0 & 0 & 1 & 2 & 3 \\
-            0 & 0 & 0 & 0 & 1 & 2 \\
-            0 & 0 & 0 & 0 & 0 & 1
-            \end{pmatrix}\]
-        </div>
-        
         <div class="matrix-input">
             <h3>Nhập ma trận ảnh:</h3>
             <div id="matrix-container">
@@ -148,13 +138,13 @@
     </div>
 
     <script>
-        // Khởi tạo ma trận mặc định theo ví dụ
+        // Khởi tạo ma trận mặc định
         let matrix = [
+            [1, 2, 3, 4, 5, 6],
             [0, 1, 2, 3, 4, 5],
             [0, 0, 1, 2, 3, 4],
             [0, 0, 0, 1, 2, 3],
-            [0, 0, 0, 0, 1, 2],
-            [0, 0, 0, 0, 0, 1]
+            [0, 0, 0, 0, 1, 2]
         ];
         
         // Render ma trận ban đầu
@@ -227,17 +217,17 @@
         // Reset ma trận
         function resetMatrix() {
             matrix = [
+                [1, 2, 3, 4, 5, 6],
                 [0, 1, 2, 3, 4, 5],
                 [0, 0, 1, 2, 3, 4],
                 [0, 0, 0, 1, 2, 3],
-                [0, 0, 0, 0, 1, 2],
-                [0, 0, 0, 0, 0, 1]
+                [0, 0, 0, 0, 1, 2]
             ];
             renderMatrix();
             document.getElementById('result-container').style.display = 'none';
         }
         
-        // Tính toán ngưỡng - SỬA LẠI CHO CHÍNH XÁC
+        // Tính toán ngưỡng - SỬA LẠI ĐỂ TÍNH TOÁN THỰC TẾ
         function calculateThreshold() {
             // Lấy tất cả giá trị từ ma trận
             const allValues = [];
@@ -247,29 +237,64 @@
                 }
             }
             
-            // Tính histogram h(g) - CHÍNH XÁC THEO VÍ DỤ
+            // Tính histogram h(g)
             const histogram = {};
-            // Khởi tạo tất cả giá trị từ 0 đến 6
-            for (let i = 0; i <= 6; i++) {
-                histogram[i] = 0;
-            }
-            // Đếm chính xác
             allValues.forEach(val => {
-                histogram[val]++;
+                histogram[val] = (histogram[val] || 0) + 1;
             });
             
-            // Tính toán chính xác theo ví dụ
-            const tableData = [
-                {g: 0, hg: 15, tg: 15, gHg: 0, cumulativeSum: 0, mg: "0.00", fg: "1.35"},
-                {g: 1, hg: 5, tg: 20, gHg: 5, cumulativeSum: 5, mg: "0.25", fg: "1.66"},
-                {g: 2, hg: 4, tg: 24, gHg: 8, cumulativeSum: 13, mg: "0.54", fg: "1.54"},
-                {g: 3, hg: 3, tg: 27, gHg: 9, cumulativeSum: 22, mg: "0.81", fg: "1.10"},
-                {g: 4, hg: 2, tg: 29, gHg: 8, cumulativeSum: 30, mg: "1.03", fg: "0.49"},
-                {g: 5, hg: 1, tg: 30, gHg: 5, cumulativeSum: 35, mg: "1.16", fg: "∞"}
-            ];
+            // Lấy các mức xám và sắp xếp
+            const grayLevels = Object.keys(histogram).map(Number).sort((a, b) => a - b);
+            const totalPixels = allValues.length;
+            const totalSum = allValues.reduce((sum, val) => sum + val, 0);
             
-            const optimalThreshold = 1;
-            const maxF = 1.66;
+            // Tính các giá trị cho bảng
+            const tableData = [];
+            let cumulativePixels = 0;
+            let cumulativeSum = 0;
+            let maxF = -1;
+            let optimalThreshold = 0;
+            
+            for (let i = 0; i < grayLevels.length; i++) {
+                const g = grayLevels[i];
+                const hg = histogram[g];
+                const gHg = g * hg;
+                
+                cumulativePixels += hg;
+                cumulativeSum += gHg;
+                
+                const tg = cumulativePixels;
+                const sumIh = cumulativeSum;
+                
+                // Tính m(g)
+                const mg = tg > 0 ? cumulativeSum / tg : 0;
+                
+                // Tính f(g) - phương sai giữa các lớp
+                let fg = Infinity;
+                if (tg > 0 && tg < totalPixels) {
+                    const w0 = tg / totalPixels;
+                    const w1 = 1 - w0;
+                    const m0 = mg;
+                    const m1 = (totalSum - cumulativeSum) / (totalPixels - tg);
+                    fg = w0 * w1 * Math.pow(m0 - m1, 2);
+                }
+                
+                tableData.push({
+                    g: g,
+                    hg: hg,
+                    tg: tg,
+                    gHg: gHg,
+                    cumulativeSum: sumIh,
+                    mg: mg.toFixed(2),
+                    fg: fg === Infinity ? '∞' : fg.toFixed(2)
+                });
+                
+                // Tìm f(g) lớn nhất
+                if (fg !== Infinity && fg > maxF) {
+                    maxF = fg;
+                    optimalThreshold = g;
+                }
+            }
             
             // Hiển thị kết quả
             displayResults(tableData, optimalThreshold, maxF);
@@ -300,7 +325,7 @@
             });
             
             document.getElementById('conclusion-text').innerHTML = 
-                `Ngưỡng cần tách \( \\theta = ${threshold} \) ứng với \( f(\\theta) = ${maxF} \)`;
+                `Ngưỡng cần tách \( \\theta = ${threshold} \) ứng với \( f(\\theta) = ${maxF.toFixed(2)} \)`;
             
             document.getElementById('result-container').style.display = 'block';
             
@@ -310,11 +335,10 @@
             }
         }
 
-        // Tính toán ngay khi trang load
+        // Tự động tính toán khi trang load
         window.onload = function() {
             renderMatrix();
-            // Tự động tính toán sau 1 giây
-            setTimeout(calculateThreshold, 1000);
+            calculateThreshold();
         };
     </script>
 </body>
