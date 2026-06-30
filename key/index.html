@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-language Product List</title>
+    <style>
+        /* Reset cơ bản */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f7;
+            color: #333;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Thanh chọn ngôn ngữ */
+        .lang-switcher {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .lang-btn {
+            padding: 8px 16px;
+            border: 1px solid #ddd;
+            background-color: #fff;
+            cursor: pointer;
+            border-radius: 20px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .lang-btn.active {
+            background-color: #0071e3;
+            color: #fff;
+            border-color: #0071e3;
+        }
+
+        /* Container chứa 4 ô xếp từ trên xuống dưới */
+        .container {
+            width: 100%;
+            max-width: 600px; /* Giới hạn độ rộng để đẹp trên cả tablet */
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        /* Bố cục của mỗi ô sản phẩm */
+        .card {
+            background-color: #fff;
+            border-radius: 12px;
+            padding: 15px;
+            display: flex;
+            gap: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+
+        /* Khối ảnh bên trái */
+        .card-left {
+            flex: 0 0 100px;
+            display: flex;
+            align-items: center;
+        }
+
+        .card-left img {
+            width: 100%;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 8px;
+            background-color: #eee; /* Ảnh tạm nếu chưa có link */
+        }
+
+        /* Khối thông tin bên phải */
+        .card-right {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .product-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #1d1d1f;
+            margin-bottom: 4px;
+        }
+
+        .product-price {
+            font-size: 1rem;
+            color: #e4393c;
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+
+        .payment-method, .status-line {
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 4px;
+        }
+
+        /* Dòng Root và No Root */
+        .status-line span {
+            display: inline-block;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+        .root { background-color: #ffe6e6; color: #d9383a; margin-right: 5px;}
+        .no-root { background-color: #e6f4ea; color: #137333; }
+
+        /* Khối 2 nút đặt ngang hàng */
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 8px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 8px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+            font-size: 0.9rem;
+            transition: opacity 0.2s;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+        }
+
+        .btn-download {
+            background-color: #f0f0f2;
+            color: #0071e3;
+        }
+
+        .btn-buy {
+            background-color: #0071e3;
+            color: #fff;
+        }
+
+        /* Tối ưu hóa thêm cho màn hình siêu nhỏ (điện thoại đời cũ) */
+        @media (max-width: 360px) {
+            .card {
+                padding: 10px;
+                gap: 10px;
+            }
+            .card-left {
+                flex: 0 0 80px;
+            }
+            .card-left img {
+                height: 80px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Thanh chuyển đổi ngôn ngữ -->
+    <div class="lang-switcher">
+        <button class="lang-btn active" onclick="switchLang('vi')">Tiếng Việt</button>
+        <button class="lang-btn" onclick="switchLang('en')">English</button>
+        <button class="lang-btn" onclick="switchLang('zh')">中文</button>
+    </div>
+
+    <!-- Danh sách 4 ô sản phẩm -->
+    <div class="container">
+        
+        <!-- Ô số 1 -->
+        <div class="card">
+            <div class="card-left">
+                <!-- Thay link ảnh của bạn vào src bên dưới -->
+                <img src="https://via.placeholder.com/100" alt="Product Image">
+            </div>
+            <div class="card-right">
+                <div>
+                    <div class="product-name" data-key="p1-name">Ứng dụng Mod A</div>
+                    <div class="product-price">150.000đ</div>
+                    <div class="payment-method"><span data-key="pay-via">Thanh toán:</span> Momo, Banking</div>
+                    <div class="status-line">
+                        <span class="root">Root</span>
+                        <span class="no-root">No Root</span>
+                    </div>
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-download" data-key="btn-dl">Tải về</button>
+                    <button class="btn btn-buy" data-key="btn-buy">Mua ngay</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ô số 2 -->
+        <div class="card">
+            <div class="card-left">
+                <img src="https://via.placeholder.com/100" alt="Product Image">
+            </div>
+            <div class="card-right">
+                <div>
+                    <div class="product-name" data-key="p2-name">Ứng dụng Mod B</div>
+                    <div class="product-price">200.000đ</div>
+                    <div class="payment-method"><span data-key="pay-via">Thanh toán:</span> Momo, Banking</div>
+                    <div class="status-line">
+                        <span class="root">Root</span>
+                        <span class="no-root">No Root</span>
+                    </div>
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-download" data-key="btn-dl">Tải về</button>
+                    <button class="btn btn-buy" data-key="btn-buy">Mua ngay</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ô số 3 -->
+        <div class="card">
+            <div class="card-left">
+                <img src="https://via.placeholder.com/100" alt="Product Image">
+            </div>
+            <div class="card-right">
+                <div>
+                    <div class="product-name" data-key="p3-name">Ứng dụng Mod C</div>
+                    <div class="product-price">Free</div>
+                    <div class="payment-method"><span data-key="pay-via">Thanh toán:</span> Miễn phí</div>
+                    <div class="status-line">
+                        <span class="no-root">No Root</span>
+                    </div>
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-download" data-key="btn-dl">Tải về</button>
+                    <button class="btn btn-buy" data-key="btn-buy">Mua ngay</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ô số 4 -->
+        <div class="card">
+            <div class="card-left">
+                <img src="https://via.placeholder.com/100" alt="Product Image">
+            </div>
+            <div class="card-right">
+                <div>
+                    <div class="product-name" data-key="p4-name">Ứng dụng Mod D</div>
+                    <div class="product-price">350.000đ</div>
+                    <div class="payment-method"><span data-key="pay-via">Thanh toán:</span> Banking</div>
+                    <div class="status-line">
+                        <span class="root">Root</span>
+                    </div>
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-download" data-key="btn-dl">Tải về</button>
+                    <button class="btn btn-buy" data-key="btn-buy">Mua ngay</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Xử lý đa ngôn ngữ -->
+    <script>
+        const langData = {
+            vi: {
+                "p1-name": "Crossfire Legends Việt Nam",
+                "p2-name": "Crossfire Legends quốc tế",
+                "p3-name": "Call Of Duty Đài Loan",
+                "p4-name": "Call Of Duty Hàn Quốc",
+                "pay-via": "Thanh toán:",
+                "btn-dl": "Tải về",
+                "btn-buy": "Mua ngay"
+            },
+            en: {
+                "p1-name": "Crossfire Legends VNG",
+                "p2-name": "Crossfire Legends Global",
+                "p3-name": "Call Of Duty Taiwan",
+                "p4-name": "Call Of Duty Korea",
+                "pay-via": "Payment:",
+                "btn-dl": "Download",
+                "btn-buy": "Buy Now"
+            },
+            zh: {
+                "p1-name": "CF手游 越南",
+                "p2-name": "CF手游 国际",
+                "p3-name": "使命召唤 台湾",
+                "p4-name": "使命召唤 韩国",
+                "pay-via": "支付方式:",
+                "btn-dl": "下载",
+                "btn-buy": "立即购买"
+            }
+        };
+
+        function switchLang(lang) {
+            // Đổi text dựa trên data-key
+            document.querySelectorAll('[data-key]').forEach(el => {
+                const key = el.getAttribute('data-key');
+                if (langData[lang][key]) {
+                    el.textContent = langData[lang][key];
+                }
+            });
+
+            // Thay đổi trạng thái active của nút bấm ngôn ngữ
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+    </script>
+</body>
+</html>
