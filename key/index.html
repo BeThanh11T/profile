@@ -76,7 +76,7 @@
             height: 100px;
             object-fit: cover;
             border-radius: 8px;
-            background-color: #eee; /* Ảnh tạm nếu chưa có link */
+            background-color: #eee;
         }
 
         /* Khối thông tin bên phải */
@@ -170,23 +170,22 @@
 
     <!-- Thanh chuyển đổi ngôn ngữ -->
     <div class="lang-switcher">
-        <button class="lang-btn active" onclick="switchLang('vi')">Tiếng Việt</button>
-        <button class="lang-btn" onclick="switchLang('en')">English</button>
-        <button class="lang-btn" onclick="switchLang('zh')">中文</button>
+        <button class="lang-btn active" onclick="switchLang('vi', this)">Tiếng Việt</button>
+        <button class="lang-btn" onclick="switchLang('en', this)">English</button>
+        <button class="lang-btn" onclick="switchLang('zh', this)">中文</button>
     </div>
 
     <!-- Danh sách 4 ô sản phẩm -->
     <div class="container">
         
-        <!-- Ô số 1 -->
+        <!-- Ô số 1 - Ảnh a -->
         <div class="card">
             <div class="card-left">
-                <!-- Thay link ảnh của bạn vào src bên dưới -->
-                <img src="https://via.placeholder.com/100" alt="Product Image">
+                <img src="anh/a.png" alt="Crossfire Legends VNG" onerror="this.src='https://via.placeholder.com/100?text=anh/a'">
             </div>
             <div class="card-right">
                 <div>
-                    <div class="product-name" data-key="p1-name">Ứng dụng Mod A</div>
+                    <div class="product-name" data-key="p1-name">Crossfire Legends Việt Nam</div>
                     <div class="product-price">150.000đ</div>
                     <div class="payment-method"><span data-key="pay-via">Thanh toán:</span> Momo, Banking</div>
                     <div class="status-line">
@@ -201,14 +200,14 @@
             </div>
         </div>
 
-        <!-- Ô số 2 -->
+        <!-- Ô số 2 - Ảnh b -->
         <div class="card">
             <div class="card-left">
-                <img src="https://via.placeholder.com/100" alt="Product Image">
+                <img src="anh/b.png" alt="Crossfire Legends Global" onerror="this.src='https://via.placeholder.com/100?text=anh/b'">
             </div>
             <div class="card-right">
                 <div>
-                    <div class="product-name" data-key="p2-name">Ứng dụng Mod B</div>
+                    <div class="product-name" data-key="p2-name">Crossfire Legends quốc tế</div>
                     <div class="product-price">200.000đ</div>
                     <div class="payment-method"><span data-key="pay-via">Thanh toán:</span> Momo, Banking</div>
                     <div class="status-line">
@@ -223,14 +222,14 @@
             </div>
         </div>
 
-        <!-- Ô số 3 -->
+        <!-- Ô số 3 - Ảnh c -->
         <div class="card">
             <div class="card-left">
-                <img src="https://via.placeholder.com/100" alt="Product Image">
+                <img src="anh/c.png" alt="Call Of Duty Taiwan" onerror="this.src='https://via.placeholder.com/100?text=anh/c'">
             </div>
             <div class="card-right">
                 <div>
-                    <div class="product-name" data-key="p3-name">Ứng dụng Mod C</div>
+                    <div class="product-name" data-key="p3-name">Call Of Duty Đài Loan</div>
                     <div class="product-price">Free</div>
                     <div class="payment-method"><span data-key="pay-via">Thanh toán:</span> Miễn phí</div>
                     <div class="status-line">
@@ -244,14 +243,14 @@
             </div>
         </div>
 
-        <!-- Ô số 4 -->
+        <!-- Ô số 4 - Ảnh d -->
         <div class="card">
             <div class="card-left">
-                <img src="https://via.placeholder.com/100" alt="Product Image">
+                <img src="anh/d.png" alt="Call Of Duty Korea" onerror="this.src='https://via.placeholder.com/100?text=anh/d'">
             </div>
             <div class="card-right">
                 <div>
-                    <div class="product-name" data-key="p4-name">Ứng dụng Mod D</div>
+                    <div class="product-name" data-key="p4-name">Call Of Duty Hàn Quốc</div>
                     <div class="product-price">350.000đ</div>
                     <div class="payment-method"><span data-key="pay-via">Thanh toán:</span> Banking</div>
                     <div class="status-line">
@@ -272,7 +271,7 @@
         const langData = {
             vi: {
                 "p1-name": "Crossfire Legends Việt Nam",
-                "p2-name": "Crossfire Legends quốc tế",
+                "p2-name": "Crossfire Legends Quốc Tế",
                 "p3-name": "Call Of Duty Đài Loan",
                 "p4-name": "Call Of Duty Hàn Quốc",
                 "pay-via": "Thanh toán:",
@@ -299,7 +298,7 @@
             }
         };
 
-        function switchLang(lang) {
+        function switchLang(lang, element) {
             // Đổi text dựa trên data-key
             document.querySelectorAll('[data-key]').forEach(el => {
                 const key = el.getAttribute('data-key');
@@ -312,7 +311,7 @@
             document.querySelectorAll('.lang-btn').forEach(btn => {
                 btn.classList.remove('active');
             });
-            event.target.classList.add('active');
+            element.classList.add('active');
         }
     </script>
 </body>
